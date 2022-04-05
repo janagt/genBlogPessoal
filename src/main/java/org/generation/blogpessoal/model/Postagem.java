@@ -1,6 +1,5 @@
 package org.generation.blogpessoal.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -36,10 +35,15 @@ public class Postagem {
 	@UpdateTimestamp
 	private LocalDateTime data;
 	
-	// Ref - Classe Tema
+	// Referência - Classe Tema
 	@ManyToOne // referencia a classe tema (várias postagens 1 tema)
 	@JsonIgnoreProperties("postagem") // ignora a classe de lista de postagem (para nao ter o loop de recursividade )
 	private Tema tema;
+	
+	// Referência - Classe Usuario
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private Usuario usuario;
 	
 	
 	// MÉTODOS GETTERS & SETTERS
@@ -82,6 +86,14 @@ public class Postagem {
 
 	public void setTema(Tema tema) {
 		this.tema = tema;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 }
