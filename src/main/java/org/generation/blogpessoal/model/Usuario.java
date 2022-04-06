@@ -31,8 +31,8 @@ public class Usuario {
 	
 	private String foto;
 	
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE) // retira conteúdo do usuário quando excluído
-	@JsonIgnoreProperties("usuario") // freia gets infinitos (recursividade)
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties("usuario") // recursividade
 	private List<Postagem> postagens;
 	
 	

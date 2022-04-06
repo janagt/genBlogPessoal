@@ -23,8 +23,8 @@ public class Tema {
 	@NotNull
 	private String descricao;
 	
-	@OneToMany(mappedBy = "tema", cascade = CascadeType.ALL) // referencia tema com postagem (1 tema várias postagens)
-	@JsonIgnoreProperties("tema") // ignora a classe de tema (para nao ter o loop de recursividade )
+	@OneToMany(mappedBy = "tema", cascade = CascadeType.ALL) // 1 tema várias postagens
+	@JsonIgnoreProperties("tema") // recursividade
 	private List<Postagem> postagem;
 	
 	public Long getId() {

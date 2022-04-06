@@ -16,32 +16,32 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity // transforma em tabela
-@Table(name="tb_postagens") // nomeia a tabela
+@Entity
+@Table(name="tb_postagens")
 public class Postagem {
 	
-	@Id // informa que é chave primária
-	@GeneratedValue(strategy=GenerationType.IDENTITY) // faz o auto incremento da chave
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank/*(message="O atributo é obrigatório!")*/ // não é nulo nem vazio + retorno de mensagem
-	@Size(min=5,max=100/*,message="O atributo deve ter no mínimo 5 e no máximo 100 letras."*/) // limite de caracteres + mensagem
+	@NotBlank/*(message="O atributo é obrigatório!")*/
+	@Size(min=5,max=100/*,message="O atributo deve ter no mínimo 5 e no máximo 100 letras."*/)
 	private String titulo;
 	
-	@NotNull/*(message="O atributo é obrigatório!")*/ // não é nulo + mensagem
-	@Size(min=5,max=1000/*,message="O atributo deve ter no mínimo 5 e no máximo 1000 letras."*/) // limite de caracteres + mensagem
+	@NotNull/*(message="O atributo é obrigatório!")*/
+	@Size(min=5,max=1000/*,message="O atributo deve ter no mínimo 5 e no máximo 1000 letras."*/)
 	private String texto;
 	
 	@UpdateTimestamp
 	private LocalDateTime data;
 	
 	// Referência - Classe Tema
-	@ManyToOne // referencia a classe tema (várias postagens 1 tema)
-	@JsonIgnoreProperties("postagem") // ignora a classe de lista de postagem (para nao ter o loop de recursividade )
+	@ManyToOne // várias postagens 1 tema
+	@JsonIgnoreProperties("postagem") // recursividade
 	private Tema tema;
 	
 	// Referência - Classe Usuario
-	@ManyToOne
+	@ManyToOne // várias postagens 1 usuário
 	@JsonIgnoreProperties("postagem")
 	private Usuario usuario;
 	

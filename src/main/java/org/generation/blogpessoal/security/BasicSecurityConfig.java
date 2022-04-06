@@ -15,24 +15,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class BasicSecurityConfig extends WebSecurityConfigurerAdapter{
 	
-	@Autowired // importa elementos da classe Service
+	@Autowired
 	private UserDetailsService userDetailsService; 
 	
 	@Override//alias
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-		auth.userDetailsService(userDetailsService); // indica o uso
+		auth.userDetailsService(userDetailsService);
 		
 		// construção usuário em memória
-		auth.inMemoryAuthentication() // cria autenticação user em memória
-		.withUser("root") // usuário usado
-		.password(passwordEncoder().encode("root")) // senha
-		.authorities("ROLE_USER"); // atribui que root root é usuário em memória
+		auth.inMemoryAuthentication()
+		.withUser("root")
+		.password(passwordEncoder().encode("root"))
+		.authorities("ROLE_USER");
 	
 	}
 	
-	@Bean // injeção de dependencia no escopo global
-	public PasswordEncoder passwordEncoder() { // importa de crypto password
-		return new BCryptPasswordEncoder(); // encripta a senha
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 	
 	@Override
