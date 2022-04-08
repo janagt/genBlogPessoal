@@ -36,6 +36,20 @@ public class Usuario {
 	private List<Postagem> postagens;
 	
 	
+	
+	
+	public Usuario(Long id, String nome, String usuario, String senha, String foto) {
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.foto = foto;
+	}
+	
+	
+	public Usuario() {	}
+
+
 	// MÉTODOS
 	
 	public Long getId() {
