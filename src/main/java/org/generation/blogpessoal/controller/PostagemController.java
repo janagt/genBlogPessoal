@@ -17,40 +17,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/postagens")
-@CrossOrigin(origins="*"/*,allowedHeaders="*"*/)
+@RestController // informa que é classe controladora
+@RequestMapping("/postagens") // define endpoint
+@CrossOrigin(origins = "*", allowedHeaders = "*") // permite demais portas na API
 public class PostagemController {
-	
-	@Autowired
-	private PostagemRepository repository;
-	
-	@GetMapping
-	public ResponseEntity<List<Postagem>> getAll(){
-		return ResponseEntity.ok(repository.findAll());
+
+	@Autowired // transfere responsabilidade pro Repository
+	private PostagemRepository postagemRepository; // injeção de dependencia
+
+	@GetMapping // requisição GET (pega) via findAll
+	public ResponseEntity<List<Postagem>> getAll() {
+		return ResponseEntity.ok(postagemRepository.findAll());
 	}
-	@GetMapping("/{id}")
-	public ResponseEntity<Postagem> getById(@PathVariable Long id){
-		return repository.findById(id)
-				.map(resp -> ResponseEntity.ok(resp))
-				.orElse(ResponseEntity.notFound().build());
+
+	@GetMapping("/{id}") // requisição GET (pega) via valor de ID
+	public ResponseEntity<Postagem> getById(@PathVariable Long id) { // valor variável do endpoint
+		return postagemRepository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 	}
-	@GetMapping("/titulo/{titulo}")
-	public ResponseEntity<List<Postagem>> getByTitulo(@PathVariable String titulo){
-		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
+
+	@GetMapping("/titulo/{titulo}") // requisição GET (pega) via título do post
+	public ResponseEntity<List<Postagem>> getByTitulo(@PathVariable String titulo) {
+		return ResponseEntity.ok(postagemRepository.findAllByTituloContainingIgnoreCase(titulo));
 	}
-	@PostMapping
-	public ResponseEntity<Postagem> post(@RequestBody Postagem postagem){
-		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
+
+	@PostMapping // requisição (posta) POST dados no db
+	public ResponseEntity<Postagem> postPostagem(@RequestBody Postagem postagem) { // solicita o body para retornar a requisição
+		return ResponseEntity.status(HttpStatus.CREATED).body(postagemRepository.save(postagem)); // (POSTA 1X) método http (status 200 created) e salva no db
 	}
-	@PutMapping
-	public ResponseEntity<Postagem> put(@RequestBody Postagem postagem){
-		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
+
+	@PutMapping // requisição (altera) PUT dados no db
+	public ResponseEntity<Postagem> putPostagem(@RequestBody Postagem postagem) { // solicita o body para retornar a requisição
+		return ResponseEntity.status(HttpStatus.OK).body(postagemRepository.save(postagem)); // (ATUALIZA) método http (status 200 created) e salva no db
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Long id) {
-		repository.deleteById(id);
+	public void deletePostagem(@PathVariable Long id) {
+		postagemRepository.deleteById(id);
 	}
 }
-

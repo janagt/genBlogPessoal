@@ -10,33 +10,40 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @Entity
-@Table(name="tb_usuarios")
+@Table(name = "tb_usuarios")
 public class Usuario {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotNull
+	@NotNull(message = "O atributo Nome é obrigatório!")
 	private String nome;
-	@NotNull
-	@Email // valida se o campo possui @ e .com
+	@Schema(example = "email@email.com.br")
+	@NotNull(message = "O atributo Usuário é obrigatório!")
+	@Email(message = "O atributo Usuário deve ser um email válido!") // valida se o campo possui @ e .com
 	private String usuario;
-	@NotNull
+	@NotBlank(message = "O atributo tenha é obrigatório!")
+	@Size(min = 4, message = "A senha deve ter no mínimo 4 caracteres")
 	private String senha;
-	
+
 	private String foto;
-	
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
+
+	// Relação - Classe Postagem
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE) // 1 usuário várias postagens
 	@JsonIgnoreProperties("usuario") // recursividade
 	private List<Postagem> postagens;
-	
-	
-	
+
+	// TESTES UNITÁRIOS JUNIT: MÉTODOS CONSTRUTOREWS
+	// CONSTRUTOR CHEIO
 	
 	public Usuario(Long id, String nome, String usuario, String senha, String foto) {
 		this.id = id;
@@ -45,13 +52,14 @@ public class Usuario {
 		this.senha = senha;
 		this.foto = foto;
 	}
-	
-	
-	public Usuario() {	}
 
-
-	// MÉTODOS
+	// CONSTRUTOR VAZIO
 	
+	public Usuario() {
+	}
+
+	// MÉTODOS GETTERS & SETTERS
+
 	public Long getId() {
 		return id;
 	}
@@ -99,5 +107,5 @@ public class Usuario {
 	public void setPostagens(List<Postagem> postagens) {
 		this.postagens = postagens;
 	}
-	
+
 }

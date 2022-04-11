@@ -16,31 +16,31 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
-@Table(name="tb_postagens")
+@Entity // informa que é tabela
+@Table(name="tb_postagens") // nomeia a tabela
 public class Postagem {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank/*(message="O atributo é obrigatório!")*/
-	@Size(min=5,max=100/*,message="O atributo deve ter no mínimo 5 e no máximo 100 letras."*/)
+	@NotBlank(message="O atributo título é obrigatório!")
+	@Size(min=5,max=100,message="O atributo deve ter no mínimo 5 e no máximo 100 letras.")
 	private String titulo;
 	
-	@NotNull/*(message="O atributo é obrigatório!")*/
-	@Size(min=5,max=1000/*,message="O atributo deve ter no mínimo 5 e no máximo 1000 letras."*/)
+	@NotNull(message="O atributo texto é obrigatório!")
+	@Size(min=5,max=1000,message="O atributo deve ter no mínimo 5 e no máximo 1000 letras.")
 	private String texto;
 	
 	@UpdateTimestamp
 	private LocalDateTime data;
 	
-	// Referência - Classe Tema
+	// Relação - Classe Tema
 	@ManyToOne // várias postagens 1 tema
 	@JsonIgnoreProperties("postagem") // recursividade
 	private Tema tema;
 	
-	// Referência - Classe Usuario
+	// Relação - Classe Usuario
 	@ManyToOne // várias postagens 1 usuário
 	@JsonIgnoreProperties("postagem")
 	private Usuario usuario;
