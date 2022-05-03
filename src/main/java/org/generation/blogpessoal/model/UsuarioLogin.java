@@ -8,6 +8,7 @@ public class UsuarioLogin {
 	private String senha;
 	private String foto;
 	private String token; // gerado em base na senha
+	private String tipo; // adicionado bloco 3
 	
 	
 	// GETTERS E SETTERS
@@ -47,6 +48,12 @@ public class UsuarioLogin {
 	}
 	public void setToken(String token) {
 		this.token = token;
+	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 }

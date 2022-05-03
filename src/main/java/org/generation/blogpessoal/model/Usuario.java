@@ -36,6 +36,8 @@ public class Usuario {
 	private String senha;
 
 	private String foto;
+	
+	private String tipo; // adc bloco 3
 
 	// Relação - Classe Postagem
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE) // 1 usuário várias postagens
@@ -106,6 +108,14 @@ public class Usuario {
 
 	public void setPostagens(List<Postagem> postagens) {
 		this.postagens = postagens;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 }
